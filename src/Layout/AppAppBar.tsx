@@ -67,7 +67,7 @@ export default function AppAppBar() {
                                 Our School?
                             </Button>
                             <Button variant="text" color="primary" size="small" onClick={() => scrollTo("ourPeople")}>
-                                Our People
+                                Our People 2
                             </Button>
                             <Button variant="text" color="primary" size="small" onClick={() => scrollTo("jobs")}>
                                 Vacancies
