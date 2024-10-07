@@ -64,7 +64,7 @@ export default function AppAppBar() {
                             />
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             <Button variant="text" color="primary" size="small" onClick={() => scrollTo("ourSchool")}>
-                                Our School
+                                Our School?
                             </Button>
                             <Button variant="text" color="primary" size="small" onClick={() => scrollTo("ourPeople")}>
                                 Our People
