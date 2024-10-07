@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master # Set a branch to deploy
+    # Review gh actions docs if you want to further define triggers, paths, etc
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Ensure all history is fetched
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build website
+        run: npm run build
+
+      - name: Custom Deployment to GitHub Pages
+        run: |
+          # Configure git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "utk09+github-actions[bot]@users.noreply.github.com"
+
+          # Build output to publish to the `gh-pages` branch:
+          git checkout --orphan gh-pages
+          # Remove all files from previous branch
+          git rm -rf .
+          # Copy build directory contents to the root
+          cp -r dist/* .
+          # Do not track action workflow files to avoid recursion
+          touch .nojekyll  # Prevents GitHub Pages from ignoring files with underscores
+          git add .
+          git commit -m "Deploy updates to GitHub Pages"
+          # Force push from the current repo's `gh-pages` branch to the remote
+          # repo's `gh-pages` branch. Orphan branches are unlinked from the main
+          # branch history.
+          git push origin gh-pages --force
+          # Cleanup
+          git checkout main
+          git branch -D gh-pages
