@@ -106,14 +106,6 @@ export function MobileLayout({
               backgroundImage: 'var(--items-imageDark)',
             }),
           })}
-          style={
-            items[selectedItemIndex]
-              ? ({
-                  '--items-imageLight': items[selectedItemIndex].imageLight,
-                  '--items-imageDark': items[selectedItemIndex].imageDark,
-                } as any)
-              : {}
-          }
         />
         <Box sx={{ px: 2, pb: 2 }}>
           <Typography
